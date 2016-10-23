@@ -56,12 +56,81 @@ var q5 = {
 
 var questions = [q1, q2, q3, q4, q5];
 
-$("button").on("click", showQuestion);
-function showQuestion(){ 
-  $(".question").html(q1.question);
-   
-  $(".choice1").html(q1.inAns1).add("button");
-  $(".choice2").html(q1.inAns2);
-  $(".choice3").html(q1.inAns3);
-  $(".choice4").html(q1.answer);
+//String Values
+var timerText = "Time Remaining: ";
+var right = "Correct!";
+var wrong = "Wrong!";
+var answerIs = "The Correct Answer was: ";
+var resultText = "All done, here's how you did!";
+
+//Variables
+var numCorrect = 0;
+var numIncorrect = 0;
+var numUnanswered = 0;
+
+//Time
+var timer = 30;
+
+/*-----Script Starts----*/
+//$(document).ready(function(){});
+$("li").hide();
+$("button").on("click", gameStart);
+
+function gameStart(){ 
+	$(".startGameBtn").hide();
+	$(".timer").html(timerText);
+  	$(".question").html(q1.question);
+  	$("li").show();
+   	$(".choices").hover(function(){
+   		$(this).css("border", "5px solid blue");
+   		
+   	});
+
+  	$(".choice1").html(q1.inAns1);
+ 	$(".choice2").html(q1.inAns2);
+  	$(".choice3").html(q1.inAns3);
+  	$(".choice4").html(q1.answer);
+}
+function userChoosesAnswer(){
+	//if(true){rightAnswerResult()}
+	//if(false){wrongAnswerResult()}
+}
+function timeRunsOut(){
+	/*if(time === 0){
+		-display to html "Out of Time!"
+		-wrongAnswerResult();
+		-showQuestion();
+	}*/
+}
+function showQuestion(){ //show for 30 seconds
+	//shows next question to html
+	//shows answer choices to html
+}
+function wrongAnswerResult(){ //show for 5 seconds
+	//display to html "Wrong Answer!"
+	//display to html "The Correct Answer is: ..."
+	//showQuestion();
+}
+function rightAnswerResult(){ //show for 5 seconds
+	//display to html "Correct!"
+	//showQuestion();
+}
+function resultPage(){
+	//display "All done, here's how you did!"
+	//display "Correct Answers: "
+	//display "Incorrect Answers: "
+	//display "Unanswered: "
+	//display button "Start Over?"
+	/*if(user clicks on Start Over button = true){
+		resetGame();
+		startGame();
+	}*/
+}
+function resetGame(){
+	//reset variables: correctAnswers, incorrectAnswers, unanswered;
+	//reset bool: clicks= false;
+	//
+}
+function resetTimer(){
+	//reset timer to 30 seconds;
 }

@@ -24,14 +24,28 @@ body{
 	display: block;
 	height: 100px;
 }
+/*Start Page*/
+.startGameBtn{
+	width: 10em;
+	height: 4em;
+	font-weight: bold;
+	font-size: 32px;
+}
+.startGameBtn:hover{
+	border: 0.5em solid green;
+}
 
 /*Header Section*/
+header{
+	margin-bottom: 3.5em;
+}
 h1{
 	font-size: 5em;
+	font-weight: bold;
 }
 /*Content Section*/
 h2{
-	font-size: 3em;
+	font-size: 2em;
 
 }
 h3{
@@ -40,6 +54,12 @@ h3{
 li{
 	list-style: none;
 	padding-left: 0px;
+}
+.choice1, .choice2, .choice3, .choice4{
+	height: 4em;
+	width: 10em;
+	margin: 10px 0 10px;
+
 }
 /*Footer Section*/
 footer{
