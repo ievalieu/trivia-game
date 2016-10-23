@@ -73,18 +73,24 @@ var timer = 30;
 
 /*-----Script Starts----*/
 //$(document).ready(function(){});
-$("li").hide();
+$(".choices").hide();
 $("button").on("click", gameStart);
 
 function gameStart(){ 
 	$(".startGameBtn").hide();
 	$(".timer").html(timerText);
   	$(".question").html(q1.question);
-  	$("li").show();
-   	$(".choices").hover(function(){
-   		$(this).css("border", "5px solid blue");
-   		
-   	});
+  	$(".choices").show();
+   	$(".choices").hover(
+   		function(){
+   			$(this).css("border", "5px solid blue");
+   			$(this).css("background", "linear-gradient(white, lightgrey)");
+   		},
+   		function(){
+   			$(this).css("border", "none");
+   			$(this).css("background", "none");
+   		}
+   	);
 
   	$(".choice1").html(q1.inAns1);
  	$(".choice2").html(q1.inAns2);
