@@ -64,26 +64,31 @@ var answerIs = "The Correct Answer was: ";
 var resultText = "All done, here's how you did!";
 
 //Variables
+var totalQuestions = 5;
 var numCorrect = 0;
 var numIncorrect = 0;
 var numUnanswered = 0;
+var resetClicked = false;
 
 //Time
 var timer = 30;
 
 /*-----Script Starts----*/
 //$(document).ready(function(){});
-$(".choices").hide();
+$("button").hide();
+$(".resetBtn").hide();
+$(".startGameBtn").show();
 $("button").on("click", gameStart);
 
 function gameStart(){ 
+
+	//display game default text
 	$(".startGameBtn").hide();
 	$(".timer").html(timerText);
-  	$(".question").html(q1.question);
-  	$(".choices").show();
+    $(".choices").show();
    	$(".choices").hover(
    		function(){
-   			$(this).css("border", "5px solid blue");
+   			$(this).css("border", "3px solid blue");
    			$(this).css("background", "linear-gradient(white, lightgrey)");
    		},
    		function(){
@@ -91,12 +96,28 @@ function gameStart(){
    			$(this).css("background", "none");
    		}
    	);
+   	
+   	//while(totalQuestion >= 0){
+   		for(var i = 0; i < questions.length; i++){
+   			
+   			showQuestion(i);
+	   		function showQuestion(num){ //show for 30 seconds
+				//shows next question to html
+				//shows answer choices to html
+				$(".question").html(questions[num].question);
+			  	$(".choice1").html(questions[num].inAns1);
+			 	$(".choice2").html(questions[num].inAns2);
+			  	$(".choice3").html(questions[num].inAns3);
+			  	$(".choice4").html(questions[num].answer);
+				
+			}
+   		} 
 
-  	$(".choice1").html(q1.inAns1);
- 	$(".choice2").html(q1.inAns2);
-  	$(".choice3").html(q1.inAns3);
-  	$(".choice4").html(q1.answer);
+   		//totalQuestion--;
+	//}
 }
+
+
 function userChoosesAnswer(){
 	//if(true){rightAnswerResult()}
 	//if(false){wrongAnswerResult()}
@@ -108,10 +129,7 @@ function timeRunsOut(){
 		-showQuestion();
 	}*/
 }
-function showQuestion(){ //show for 30 seconds
-	//shows next question to html
-	//shows answer choices to html
-}
+
 function wrongAnswerResult(){ //show for 5 seconds
 	//display to html "Wrong Answer!"
 	//display to html "The Correct Answer is: ..."
@@ -121,21 +139,34 @@ function rightAnswerResult(){ //show for 5 seconds
 	//display to html "Correct!"
 	//showQuestion();
 }
-function resultPage(){
-	//display "All done, here's how you did!"
-	//display "Correct Answers: "
-	//display "Incorrect Answers: "
-	//display "Unanswered: "
-	//display button "Start Over?"
-	/*if(user clicks on Start Over button = true){
-		resetGame();
-		startGame();
-	}*/
+//totalQuestions = 1;
+if(totalQuestions === 0){
+	resultPage();
 }
-function resetGame(){
-	//reset variables: correctAnswers, incorrectAnswers, unanswered;
-	//reset bool: clicks= false;
-	//
+function resultPage(){
+	$(".resultText").html(resultText);
+	$(".numCorrect").html("Correct Answers: " + numCorrect);
+	$(".numIncorrect").html("Incorrect Answers: " + numIncorrect);
+	$(".numUnanswered").html("Unanswered: " + numUnanswered);
+	
+	$(".resetBtn").show();
+	$(".resetBtn").on("click", function(){
+		resetClicked = true;
+	});
+
+	if(resetClicked === true){
+		resetGame();
+		function resetGame(){
+			totalQuestions = 5;
+			numCorrect = 0;
+			numIncorrect = 0;
+			numUnanswered = 0;
+			resetClicked = false;
+			//check if variables change
+			console.log(numCorrect, numUnanswered, numIncorrect, resetClicked);
+		}
+		startGame();
+	}
 }
 function resetTimer(){
 	//reset timer to 30 seconds;
