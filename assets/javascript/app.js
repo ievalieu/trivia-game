@@ -61,6 +61,7 @@ var answerIs = "The Correct Answer was: ";
 var resultText = "All done, here's how you did!";
 
 //Variables
+var questionNum = 0; //0-4 for loop
 var totalQuestions = 5;
 var numCorrect = 0;
 var numIncorrect = 0;
@@ -77,10 +78,7 @@ $(".resetBtn").hide();
 $(".startGameBtn").show();
 $(".startGameBtn").on("click", gameStart);
 
-$(".choices").on("click", function(){
-		var choice = $(this).attr("value", "answer");
-		console.log(choice);
-});
+
 
 function gameStart(){ 
 	//display game default text
@@ -92,15 +90,24 @@ function gameStart(){
 		//shows next question to html
 		$(".question").html(questions[num].question);
 	  	//shows answer choices to html
-	  	for(var i = 0; i < questions.length; i++){
-	  
-
-		  	$(".choice1").html(questions[num].inAns1);
-		 	$(".choice2").html(questions[num].inAns2);
-		  	$(".choice3").html(questions[num].inAns3);
-		  	$(".choice4").html(questions[num].answer);
+	  	
+	  	var arr = [questions[num].inAns1, questions[num].inAns2, questions[num].inAns3, questions[num].answer];
+		arr = shuffle(arr);
+		console.log(arr);
+		
+		for(var i = 0; i < arr.length; i++){
+		  	$(".choice"+[i]+"").html(arr[i]).attr("value", arr[i]);
+		  	console.log()
 		}
-		//Work on click event and if else statements for correct/wrong answers
+		var userChoice = "";
+		$(".choices").on("click", function(num){
+			userChoice = $(this).attr("value");
+			console.log(num);
+			console.log(userChoice);
+			return userChoice;
+		});
+		console.log(userChoice);
+		checkUserChoice(num, userChoice);
 	}
 
     $(".choices").show();
@@ -114,19 +121,23 @@ function gameStart(){
    			$(this).css("background", "none");
    		}
    	);
-
-   	
 }
-function userChoosesAnswer(){
+function checkUserChoice(num, userChoice){
+	console.log(userChoice);
+	if(userChoice === questions[num].answer){
+		console.log(userChoice + questions[num].answer + " Correct!");
+	}else{
+		console.log(userChoice + "Wrong!");
+	}
 	
 	//if(true){rightAnswerResult()}
 	//if(false){wrongAnswerResult()}
 }
+
 function wrongAnswerResult(){ //show for 5 seconds
 	$(".rightOrWrong").html("Wrong Answer!");
 	$(".correctAnswer").html("The Correct Answer is...");
-	setTimeout(showQuestion(),
-	 5000);
+	setTimeout(showQuestion(), 5000);
 	//display to html "The Correct Answer is: ..."
 
 }
