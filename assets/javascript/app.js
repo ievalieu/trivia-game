@@ -13,7 +13,13 @@
 10. Correct! replaces Question. and pic.
 11. Start Over! Button CLICK
 */
-
+var answers = {
+	q0: "Rome",
+	q1: "Bull Fights",
+	q2: "Underground Railway System",
+	q3: "Seine River",
+	q4: "Success, Love, or Longevity"
+}
 //Questions
 var q0 = {
 	question: "What is the capital of Italy?",
@@ -67,83 +73,140 @@ var numCorrect = 0;
 var numIncorrect = 0;
 var numUnanswered = 0;
 var resetClicked = false;
-
+var userChoice = "none";
 //Time
 var timer = 30;
 
 /*-----Script Starts----*/
-//$(document).ready(function(){});
+$(document).ready(function(){
+
 $("button").hide();
 $(".resetBtn").hide();
+$(".choices").hide();
 $(".startGameBtn").show();
 $(".startGameBtn").on("click", gameStart);
 
-
-
-function gameStart(){ 
-	//display game default text
-	$(".startGameBtn").hide();
-	
-	showQuestion(0);
-	function showQuestion(num){ //show for 30 seconds
-		countDown();
-		//shows next question to html
-		$(".question").html(questions[num].question);
-	  	//shows answer choices to html
-	  	
-	  	var arr = [questions[num].inAns1, questions[num].inAns2, questions[num].inAns3, questions[num].answer];
-		arr = shuffle(arr);
-		console.log(arr);
+	function gameStart(){ 
+		//display game default text
+		$(".startGameBtn").hide();
+		$(".choices").show();
+	   	$(".choices").hover(
+	   		function(){
+	   			$(this).css("border", "3px solid blue");
+	   			$(this).css("background", "linear-gradient(white, lightgrey)");
+	   		},
+	   		function(){
+	   			$(this).css("border", "none");
+	   			$(this).css("background", "none");
+	   		}
+	   	);
 		
-		for(var i = 0; i < arr.length; i++){
-		  	$(".choice"+[i]+"").html(arr[i]).attr("value", arr[i]);
-		  	console.log()
+		questionNum = 0;
+
+		showQuestion(questionNum);
+		function showQuestion(num){ //show for 30 seconds
+			countDown();
+			//shows next question to html
+			$(".question").html(questions[num].question);
+		  	//shows answer choices to html
+		  	
+		  	var arr = [questions[num].inAns1, questions[num].inAns2, questions[num].inAns3, questions[num].answer];
+			arr = shuffle(arr);
+			console.log(arr);
+			
+			for(var i = 0; i < arr.length; i++){
+			  	$(".choice"+[i]+"").html(arr[i]).attr("value", arr[i]);
+			}
+				console.log($(".choice0").attr("value"));
+			  	console.log($(".choice1").attr("value"));
+			  	console.log($(".choice2").attr("value"));
+			  	console.log($(".choice3").attr("value"));
+				console.log(userChoice + "is chosen yet."); //not yet chosen
 		}
-		var userChoice = "";
-		$(".choices").on("click", function(num){
-			userChoice = $(this).attr("value");
-			console.log(num);
-			console.log(userChoice);
-			return userChoice;
-		});
-		console.log(userChoice);
-		checkUserChoice(num, userChoice);
+		//user choice function
+		$(".choices").on("click", function(questionNum){
+			var answers = {
+				q0: "Rome",
+				q1: "Bull Fights",
+				q2: "Underground Railway System",
+				q3: "Seine River",
+				q4: "Success, Love, or Longevity"
+			}
+			userChoice = $(this).attr("value");	
+			console.log("userChoice is: " + userChoice);
+			//HACK, won't read (questions[questionNum].answer) WHY?
+			if(userChoice === answers.q0){
+				console.log(userChoice + answers.q0 + " Correct!");
+				rightAnswerResult();
+			}else if(userChoice === answers.q1){
+				console.log(userChoice + answers.q1 + " Correct!");
+				rightAnswerResult();
+			}else if(userChoice === answers.q2){
+				console.log(userChoice + answers.q2 + " Correct!");
+				rightAnswerResult();
+			}else if(userChoice === answers.q3){
+				console.log(userChoice + answers.q3 + " Correct!");
+				rightAnswerResult();
+			}else if(userChoice === answers.q4){
+				console.log(userChoice + answers.q4 + " Correct!");
+				rightAnswerResult();
+			}else {
+				console.log(userChoice + "Wrong!");
+				wrongAnswerResult();
+			}
+
+		});	
+
+			questionNum++;
+			totalQuestions--;
 	}
 
-    $(".choices").show();
-   	$(".choices").hover(
-   		function(){
-   			$(this).css("border", "3px solid blue");
-   			$(this).css("background", "linear-gradient(white, lightgrey)");
-   		},
-   		function(){
-   			$(this).css("border", "none");
-   			$(this).css("background", "none");
-   		}
-   	);
-}
-function checkUserChoice(num, userChoice){
-	console.log(userChoice);
-	if(userChoice === questions[num].answer){
-		console.log(userChoice + questions[num].answer + " Correct!");
-	}else{
-		console.log(userChoice + "Wrong!");
-	}
-	
-	//if(true){rightAnswerResult()}
-	//if(false){wrongAnswerResult()}
-}
+});
 
 function wrongAnswerResult(){ //show for 5 seconds
+	var answers = {
+			q0: "Rome",
+			q1: "Bull Fights",
+			q2: "Underground Railway System",
+			q3: "Seine River",
+			q4: "Success, Love, or Longevity"
+	}
+	resetTimer();
+	numIncorrect++
+	console.log("numIncorrect: " + numIncorrect);
+
 	$(".rightOrWrong").html("Wrong Answer!");
 	$(".correctAnswer").html("The Correct Answer is...");
-	setTimeout(showQuestion(), 5000);
-	//display to html "The Correct Answer is: ..."
+	$(".choices").hide();
+	//HACK //NOT WORKING
+	if($(".choices").attr("value", answers.q0)){
+		$(this).show();
+	}else if($(".choices").attr("value", answers.q1)){
+		$(this).show();
+	}else if($(".choices").attr("value", answers.q2)){
+		$(this).show();
+	}else if($(".choices").attr("value", answers.q3)){
+		$(this).show();
+	}else if($(".choices").attr("value", answers.q4)){
+		$(this).show();
+	}
 
+	questionNum++;
+	totalQuestions
+	setTimeout(showQuestion(questionNum), 5000);
+	//display to html "The Correct Answer is: ..."
+	
 }
 function rightAnswerResult(){ //show for 5 seconds
+	numCorrect++;
+	console.log("numCorrect: " + numCorrect);
+	resetTimer();
 	$(".rightOrWrong").html("Correct!");
-	setTimeout(showQuestion(), 5000);
+
+			questionNum++;
+			totalQuestions
+	setTimeout(showQuestion, 5000);
+	
 }
 //totalQuestions = 1;
 if(totalQuestions === 0){
@@ -184,6 +247,8 @@ function decrement(){
 	$(".timer").html(timerText + timer);
 		if(timer===0){
 	    	resetTimer();
+	    	numUnanswered++;
+	    	console.log("numUnanswered: " + numUnanswered);
 	    	$(".timer").html("Out of Time!");
 			wrongAnswerResult();
 			showQuestion(); 
