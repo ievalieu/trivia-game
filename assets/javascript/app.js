@@ -12,11 +12,8 @@
 9. Immediately move on to next question after a certain time. 
 10. Correct! replaces Question. and pic.
 11. Start Over! Button CLICK
-
-
-
-
 */
+
 //Questions
 var q1 = {
 	question: "What is the capital of Italy?",
@@ -80,11 +77,38 @@ $(".resetBtn").hide();
 $(".startGameBtn").show();
 $("button").on("click", gameStart);
 
-function gameStart(){ 
+/*	$(".choices").on("click", function(){
+		$(this).attr("value");
+	});
+*/
 
+function gameStart(){ 
 	//display game default text
 	$(".startGameBtn").hide();
-	$(".timer").html(timerText);
+	countDown();
+	if(timer === 0){
+		showQuestion();
+	}
+
+	for(var i = 0; i < questions.length; i++){
+		showQuestion(i);
+	   	function showQuestion(num){ //show for 30 seconds
+			//shows next question to html
+			//shows answer choices to html
+			$(".question").html(questions[num].question);
+		  	$(".choice1").html(questions[num].inAns1);
+		 	$(".choice2").html(questions[num].inAns2);
+		  	$(".choice3").html(questions[num].inAns3);
+		  	$(".choice4").html(questions[num].answer);
+		
+//Work on click event and if else statements for correct/wrong answers
+
+		}
+   	} 
+
+   	//	totalQuestion--;
+	//}
+
     $(".choices").show();
    	$(".choices").hover(
    		function(){
@@ -97,27 +121,7 @@ function gameStart(){
    		}
    	);
    	
-   	//while(totalQuestion >= 0){
-   		for(var i = 0; i < questions.length; i++){
-   			
-   			showQuestion(i);
-	   		function showQuestion(num){ //show for 30 seconds
-				//shows next question to html
-				//shows answer choices to html
-				$(".question").html(questions[num].question);
-			  	$(".choice1").html(questions[num].inAns1);
-			 	$(".choice2").html(questions[num].inAns2);
-			  	$(".choice3").html(questions[num].inAns3);
-			  	$(".choice4").html(questions[num].answer);
-				
-			}
-   		} 
-
-   		//totalQuestion--;
-	//}
 }
-
-
 function userChoosesAnswer(){
 	//if(true){rightAnswerResult()}
 	//if(false){wrongAnswerResult()}
@@ -129,7 +133,6 @@ function timeRunsOut(){
 		-showQuestion();
 	}*/
 }
-
 function wrongAnswerResult(){ //show for 5 seconds
 	//display to html "Wrong Answer!"
 	//display to html "The Correct Answer is: ..."
@@ -168,6 +171,18 @@ function resultPage(){
 		startGame();
 	}
 }
+
+function countDown(){
+	counter = setInterval(decrement, 1000);
+}
+function decrement(){
+	timer--;
+	  
+	$(".timer").html(timerText + timer);
+		if(timer===0){
+	    	resetTimer(); 
+		}
+	}
 function resetTimer(){
-	//reset timer to 30 seconds;
+	clearInterval(counter);
 }

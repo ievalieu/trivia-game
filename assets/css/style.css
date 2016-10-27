@@ -5,13 +5,13 @@ html, body{
 body{
 	width: 100%;
 	background-image: url("../images/travelbkgd.jpg");
-	background-repeat: no-repeat;
+	background-size: 100% 130%;
 	background-position: center;
-
+	background-repeat: no-repeat;
 }
 .wrap{
 	text-align: center;
-	background: rgba(100%, 100%, 100%, 0.7);
+	background: rgba(100%, 100%, 100%, 0.5);
 	width: 70%;
 	margin-left: auto;
 	margin-right: auto;
@@ -24,15 +24,27 @@ body{
 	display: block;
 	height: 100px;
 }
+		/*Font Styles*/
+@font-face{
+	font-family: "Julius Sans One"; src: url("fonts/Julius_Sans_One/JuliusSansOne-Regular.ttf");
+}
+@font-face{
+	font-family: "Bungee Inline"; src: url("fonts/Bungee_Inline/BungeeInline-Regular.ttf");
+}
+@font-face{
+	font-family: "Cinzel"; src: url("fonts/Cinzel/Cinzel-Regular.ttf");
+}
+
 /*Start Page*/
 .startGameBtn{
 	width: 10em;
 	height: 4em;
 	font-weight: bold;
 	font-size: 32px;
+	font-family: "Julius Sans One";
 }
 .startGameBtn:hover{
-	border: 0.5em solid green;
+	border: 0.3em solid green;
 }
 
 /*Header Section*/
@@ -41,15 +53,30 @@ header{
 }
 h1{
 	font-size: 5em;
-	font-weight: bold;
+	font-family: "Julius Sans One";
+	text-align: center;
+	font-weight: bolder;
+	text-shadow: 2px 2px 2px #aaa;
+	letter-spacing: 10px;	
 }
 /*Content Section*/
+.timer{
+	font-family: "Bungee Inline";
+	text-shadow: 0px 0px 0px #fff;
+	color: darkblue;
+}
 h2{
 	font-size: 2em;
+
 }
-h3{
-	font-size: 2.5em;
-	font-weight: bold;
+h3{ 
+	font-size: 1.9em;
+	font-family: "Julius Sans One";
+	text-shadow: 1px 1px 0px #000;
+	color: black;
+	font-weight: bolder;
+	padding-left: 1em;
+	padding-right: 1em;
 }
 li{
 	list-style: none;
@@ -57,17 +84,19 @@ li{
 }
 .choice1, .choice2, .choice3, .choice4{
 	height: 3em;
-	width: 10em;
+	width: 18em;
 	margin: 10px 0 10px;
 	border: none;
 	background: none;
 	font-size: 1.5em;
-
+	font-family: "Cinzel";
+	font-weight: bolder;
 }
 /*Footer Section*/
 footer{
 	width: 100%;
 	height: 100px;
+	background: none;
 	text-align: center;
 }
 
@@ -76,9 +105,105 @@ footer{
 }/*laptops -- delete after -- reference's sake*/
 
 @media screen and (max-width: 960px){
+	body{
+		background-size: 100% 130%;
+		background-position: center;
+	}
+			/*Start Page*/
+	.startGameBtn{
+		width: 9em;
+		height: 4em;
+		font-weight: bold;
+		font-size: 25px;
+		font-family: "Julius Sans One";
+	}
+		h1{
+		font-size: 4em;
+		letter-spacing: 3px;	
+	}
+	/*Content Section*/
+	.timer{
+		font-size: 1.5em;
+	}
+	h2{
+		font-size: 2.3em;
+
+	}
+	h3{ 
+		font-size: 2em;
+	}
+	.choice1, .choice2, .choice3, .choice4{
+		height: 3em;
+		width: 16em;
+		font-size: 1.3em;
+	}
+
 }/*desktop layout*/
 @media screen and (max-width: 768px){
+	body{
+		background-size: 130% 120%;
+	}
+			/*Start Page*/
+	.startGameBtn{
+		width: 9em;
+		height: 4em;
+		font-weight: bold;
+		font-size: 25px;
+		font-family: "Julius Sans One";
+	}
+		h1{
+		font-size: 4em;
+		letter-spacing: 3px;	
+	}
+	/*Content Section*/
+	.timer{
+		font-size: 1.5em;
+	}
+	h2{
+		font-size: 2.3em;
+
+	}
+	h3{ 
+		font-size: 2em;
+	}
+	.choice1, .choice2, .choice3, .choice4{
+		height: 3em;
+		width: 16em;
+		font-size: 1.3em;
+	}
 
 }/*tablet*/
 @media screen and (max-width: 650px){
+	body{
+		background-size: 180% 180%;
+	}
+		/*Start Page*/
+	.startGameBtn{
+		width: 8em;
+		height: 4em;
+		font-weight: bold;
+		font-size: 25px;
+		font-family: "Julius Sans One";
+	}
+	h1{
+		font-size: 3em;
+		letter-spacing: 3px;	
+	}
+	/*Content Section*/
+	.timer{
+		font-size: 1.5em;
+	}
+	h2{
+		font-size: 2em;
+
+	}
+	h3{ 
+		font-size: 1.5em;
+	}
+	.choice1, .choice2, .choice3, .choice4{
+		height: 4em;
+		width: 10em;
+		font-size: 1.2em;
+	}
+
 }/*phone in landscape*/
