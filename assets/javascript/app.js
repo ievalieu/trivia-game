@@ -15,35 +15,35 @@
 */
 
 //Questions
-var q1 = {
+var q0 = {
 	question: "What is the capital of Italy?",
 	answer: "Rome",
 	inAns1: "Milan",
 	inAns2: "Venice",
 	inAns3: "Florence", 
 }
-var q2 = {
+var q1 = {
 	question: "What is Spain most famous for out of the following?",
 	answer: "Bull Fights",
 	inAns1: "Seafood",
 	inAns2: "Hot Sauce",
 	inAns3: "Basketball", 
 }
-var q3 = {
+var q2 = {
 	question: "In London, the \"Tube\" refers to which of the following?",
 	answer: "Underground Railway System",
 	inAns1: "A Cyclical-Shaped Desert",
 	inAns2: "Spyglass",
 	inAns3: "Roll of Toilet Paper", 
 }
-var q4 = {
+var q3 = {
 	question: "Which river in France recently flooded in June 2016?",
 	answer: "Seine River",
 	inAns1: "Loire River",
 	inAns2: "Garonne River",
 	inAns3: "Saône River", 
 }
-var q5 = {
+var q4 = {
 	question: "At Otowa Waterfall in Japan, you can drink from one of the three streams to be granted which of three blessings?",
 	answer: "Success, Love, or Longevity",
 	inAns1: "Wealth, Health, or Friendship",
@@ -51,7 +51,7 @@ var q5 = {
 	inAns3: "Beauty, Fertility, or Wisdom", 
 }
 
-var questions = [q1, q2, q3, q4, q5];
+var questions = [q0, q1, q2, q3, q4];
 
 //String Values
 var timerText = "Time Remaining: ";
@@ -75,39 +75,33 @@ var timer = 30;
 $("button").hide();
 $(".resetBtn").hide();
 $(".startGameBtn").show();
-$("button").on("click", gameStart);
+$(".startGameBtn").on("click", gameStart);
 
-/*	$(".choices").on("click", function(){
-		$(this).attr("value");
-	});
-*/
+$(".choices").on("click", function(){
+		var choice = $(this).attr("value", "answer");
+		console.log(choice);
+});
 
 function gameStart(){ 
 	//display game default text
 	$(".startGameBtn").hide();
-	countDown();
-	if(timer === 0){
-		showQuestion();
-	}
+	
+	showQuestion(0);
+	function showQuestion(num){ //show for 30 seconds
+		countDown();
+		//shows next question to html
+		$(".question").html(questions[num].question);
+	  	//shows answer choices to html
+	  	for(var i = 0; i < questions.length; i++){
+	  
 
-	for(var i = 0; i < questions.length; i++){
-		showQuestion(i);
-	   	function showQuestion(num){ //show for 30 seconds
-			//shows next question to html
-			//shows answer choices to html
-			$(".question").html(questions[num].question);
 		  	$(".choice1").html(questions[num].inAns1);
 		 	$(".choice2").html(questions[num].inAns2);
 		  	$(".choice3").html(questions[num].inAns3);
 		  	$(".choice4").html(questions[num].answer);
-		
-//Work on click event and if else statements for correct/wrong answers
-
 		}
-   	} 
-
-   	//	totalQuestion--;
-	//}
+		//Work on click event and if else statements for correct/wrong answers
+	}
 
     $(".choices").show();
    	$(".choices").hover(
@@ -120,27 +114,25 @@ function gameStart(){
    			$(this).css("background", "none");
    		}
    	);
+
    	
 }
 function userChoosesAnswer(){
+	
 	//if(true){rightAnswerResult()}
 	//if(false){wrongAnswerResult()}
 }
-function timeRunsOut(){
-	/*if(time === 0){
-		-display to html "Out of Time!"
-		-wrongAnswerResult();
-		-showQuestion();
-	}*/
-}
 function wrongAnswerResult(){ //show for 5 seconds
-	//display to html "Wrong Answer!"
+	$(".rightOrWrong").html("Wrong Answer!");
+	$(".correctAnswer").html("The Correct Answer is...");
+	setTimeout(showQuestion(),
+	 5000);
 	//display to html "The Correct Answer is: ..."
-	//showQuestion();
+
 }
 function rightAnswerResult(){ //show for 5 seconds
-	//display to html "Correct!"
-	//showQuestion();
+	$(".rightOrWrong").html("Correct!");
+	setTimeout(showQuestion(), 5000);
 }
 //totalQuestions = 1;
 if(totalQuestions === 0){
@@ -180,9 +172,31 @@ function decrement(){
 	  
 	$(".timer").html(timerText + timer);
 		if(timer===0){
-	    	resetTimer(); 
+	    	resetTimer();
+	    	$(".timer").html("Out of Time!");
+			wrongAnswerResult();
+			showQuestion(); 
 		}
 	}
 function resetTimer(){
 	clearInterval(counter);
+}
+//Knuth Shuffle
+function shuffle(array) {
+  var currentIndex = array.length, temporaryValue, randomIndex;
+
+  // While there remain elements to shuffle...
+  while (0 !== currentIndex) {
+
+    // Pick a remaining element...
+    randomIndex = Math.floor(Math.random() * currentIndex);
+    currentIndex -= 1;
+
+    // And swap it with the current element.
+    temporaryValue = array[currentIndex];
+    array[currentIndex] = array[randomIndex];
+    array[randomIndex] = temporaryValue;
+  }
+
+  return array;
 }
