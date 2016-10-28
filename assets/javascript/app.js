@@ -1,25 +1,3 @@
-/*Pseudo Code
-1. Add button to screen.
-2. User can CLICK on Start Button to begin trivia game
-3. Timer for question starts
-4. Question shows
-5. Answers show
-6. User can HOVER over answers to choose and CLICK
-7. Boolean value, true or false for right answer
-	-False-> Wrong! Replaces Question; The Correct Answer replaces Answers; Insert Pic for certain time
-	-True-> 
-8. Run out of time. Out of Time! replaces question; the correct answer and pic shown
-9. Immediately move on to next question after a certain time. 
-10. Correct! replaces Question. and pic.
-11. Start Over! Button CLICK
-*/
-var answers = {
-	q0: "Rome",
-	q1: "Bull Fights",
-	q2: "Underground Railway System",
-	q3: "Seine River",
-	q4: "Success, Love, or Longevity"
-}
 //Questions
 var q0 = {
 	question: "What is the capital of Italy?",
@@ -47,7 +25,7 @@ var q3 = {
 	answer: "Seine River",
 	inAns1: "Loire River",
 	inAns2: "Garonne River",
-	inAns3: "Saône River", 
+	inAns3: "Saone River", 
 }
 var q4 = {
 	question: "At Otowa Waterfall in Japan, you can drink from one of the three streams to be granted which of three blessings?",
@@ -58,7 +36,13 @@ var q4 = {
 }
 
 var questions = [q0, q1, q2, q3, q4];
-
+var answers = {
+	q0: "Rome",
+	q1: "Bull Fights",
+	q2: "Underground Railway System",
+	q3: "Seine River",
+	q4: "Success, Love, or Longevity"
+}
 //String Values
 var timerText = "Time Remaining: ";
 var right = "Correct!";
@@ -74,95 +58,98 @@ var numIncorrect = 0;
 var numUnanswered = 0;
 var resetClicked = false;
 var userChoice = "none";
+var choiceClicked = false;
 //Time
 var timer = 30;
 
-/*-----Script Starts----*/
-$(document).ready(function(){
-
-$("button").hide();
-$(".resetBtn").hide();
-$(".choices").hide();
-$(".startGameBtn").show();
-$(".startGameBtn").on("click", gameStart);
-
-	function gameStart(){ 
-		//display game default text
-		$(".startGameBtn").hide();
-		$(".choices").show();
-	   	$(".choices").hover(
-	   		function(){
-	   			$(this).css("border", "3px solid blue");
-	   			$(this).css("background", "linear-gradient(white, lightgrey)");
-	   		},
-	   		function(){
-	   			$(this).css("border", "none");
-	   			$(this).css("background", "none");
-	   		}
-	   	);
-		
-		questionNum = 0;
-
-		showQuestion(questionNum);
-		function showQuestion(num){ //show for 30 seconds
-			countDown();
-			//shows next question to html
-			$(".question").html(questions[num].question);
-		  	//shows answer choices to html
-		  	
-		  	var arr = [questions[num].inAns1, questions[num].inAns2, questions[num].inAns3, questions[num].answer];
-			arr = shuffle(arr);
-			console.log(arr);
-			
-			for(var i = 0; i < arr.length; i++){
-			  	$(".choice"+[i]+"").html(arr[i]).attr("value", arr[i]);
-			}
-				console.log($(".choice0").attr("value"));
-			  	console.log($(".choice1").attr("value"));
-			  	console.log($(".choice2").attr("value"));
-			  	console.log($(".choice3").attr("value"));
-				console.log(userChoice + "is chosen yet."); //not yet chosen
+//Functions
+function gameStart(){ 
+	//display game default text
+	$(".startGameBtn").hide();
+	$(".choices").show();
+   	$(".choices").hover(
+   		function(){
+   			$(this).css("border", "3px solid blue");
+   			$(this).css("background", "linear-gradient(white, lightgrey)");
+   		},
+   		function(){
+   			$(this).css("border", "none");
+   			$(this).css("background", "none");
+   		}
+   	);
+	questionNum = 0;
+	showQuestion(questionNum);
+	while(questionNum<4){
+		questionNum++;
+		totalQuestions--;
+		console.log("questionNum: " + questionNum + " totalQuestions: " + totalQuestions);
+		if(choiceMade === true){
+			showQuestion(questionNum);
 		}
-		//user choice function
-		$(".choices").on("click", function(questionNum){
-			var answers = {
-				q0: "Rome",
-				q1: "Bull Fights",
-				q2: "Underground Railway System",
-				q3: "Seine River",
-				q4: "Success, Love, or Longevity"
-			}
-			userChoice = $(this).attr("value");	
-			console.log("userChoice is: " + userChoice);
-			//HACK, won't read (questions[questionNum].answer) WHY?
-			if(userChoice === answers.q0){
-				console.log(userChoice + answers.q0 + " Correct!");
-				rightAnswerResult();
-			}else if(userChoice === answers.q1){
-				console.log(userChoice + answers.q1 + " Correct!");
-				rightAnswerResult();
-			}else if(userChoice === answers.q2){
-				console.log(userChoice + answers.q2 + " Correct!");
-				rightAnswerResult();
-			}else if(userChoice === answers.q3){
-				console.log(userChoice + answers.q3 + " Correct!");
-				rightAnswerResult();
-			}else if(userChoice === answers.q4){
-				console.log(userChoice + answers.q4 + " Correct!");
-				rightAnswerResult();
-			}else {
-				console.log(userChoice + "Wrong!");
-				wrongAnswerResult();
-			}
-
-		});	
-
-			questionNum++;
-			totalQuestions--;
 	}
+	
+	
+	//user choice function
+	$(".choices").on("click", function(questionNum){
+		var answers = {
+			q0: "Rome",
+			q1: "Bull Fights",
+			q2: "Underground Railway System",
+			q3: "Seine River",
+			q4: "Success, Love, or Longevity"
+		}
+		userChoice = $(this).attr("value");	
+		console.log("userChoice is: " + userChoice);
+		//HACK, won't read (questions[questionNum].answer) WHY?
+		console.log(questionNum);
+		if(userChoice === answers.q0){
+			console.log(userChoice + answers.q0 + " Correct!");
+			rightAnswerResult(questionNum);
+		}else if(userChoice === answers.q1){
+			console.log(userChoice + answers.q1 + " Correct!");
+			rightAnswerResult(questionNum);
+		}else if(userChoice === answers.q2){
+			console.log(userChoice + answers.q2 + " Correct!");
+			rightAnswerResult(questionNum);
+		}else if(userChoice === answers.q3){
+			console.log(userChoice + answers.q3 + " Correct!");
+			rightAnswerResult(questionNum);
+		}else if(userChoice === answers.q4){
+			console.log(userChoice + answers.q4 + " Correct!");
+			rightAnswerResult(questionNum);
+		}else {
+			console.log(userChoice + "Wrong!");
+			wrongAnswerResult();
+		}
 
-});
+		choiceMade = true;
 
+	});	
+
+	//totalQuestions = 1;
+	if(totalQuestions === 0){
+		resultPage();
+	}
+}
+function showQuestion(num){ //show for 30 seconds
+	choiceMade = false;
+	countDown();
+	//shows next question to html
+	$(".question").html(questions[num].question);
+		//shows answer choices to html
+	var arr = [questions[num].inAns1, questions[num].inAns2, questions[num].inAns3, questions[num].answer];
+	arr = shuffle(arr);
+	console.log(arr);
+
+	for(var i = 0; i < arr.length; i++){
+	  	$(".choice"+[i]+"").html(arr[i]).attr("value", arr[i]);
+	}
+		console.log($(".choice0").attr("value"));
+	  	console.log($(".choice1").attr("value"));
+	  	console.log($(".choice2").attr("value"));
+	  	console.log($(".choice3").attr("value"));
+		console.log(userChoice + "is chosen yet."); //not yet chosen
+}
 function wrongAnswerResult(){ //show for 5 seconds
 	var answers = {
 			q0: "Rome",
@@ -191,26 +178,18 @@ function wrongAnswerResult(){ //show for 5 seconds
 		$(this).show();
 	}
 
-	questionNum++;
-	totalQuestions
-	setTimeout(showQuestion(questionNum), 5000);
 	//display to html "The Correct Answer is: ..."
 	
 }
-function rightAnswerResult(){ //show for 5 seconds
+function rightAnswerResult(num){ //show for 5 seconds
 	numCorrect++;
 	console.log("numCorrect: " + numCorrect);
 	resetTimer();
 	$(".rightOrWrong").html("Correct!");
-
-			questionNum++;
-			totalQuestions
-	setTimeout(showQuestion, 5000);
-	
-}
-//totalQuestions = 1;
-if(totalQuestions === 0){
-	resultPage();
+	$(".choices").hide();
+	$(".choice0").html(questions[questionNum].answer);
+	var questionNum = num++;
+	showQuestion(questionNum);	
 }
 function resultPage(){
 	$(".resultText").html(resultText);
@@ -238,12 +217,12 @@ function resultPage(){
 	}
 }
 
+//Timer Functions
 function countDown(){
 	counter = setInterval(decrement, 1000);
 }
 function decrement(){
 	timer--;
-	  
 	$(".timer").html(timerText + timer);
 		if(timer===0){
 	    	resetTimer();
@@ -257,22 +236,45 @@ function decrement(){
 function resetTimer(){
 	clearInterval(counter);
 }
+
 //Knuth Shuffle
 function shuffle(array) {
   var currentIndex = array.length, temporaryValue, randomIndex;
-
   // While there remain elements to shuffle...
   while (0 !== currentIndex) {
-
     // Pick a remaining element...
     randomIndex = Math.floor(Math.random() * currentIndex);
     currentIndex -= 1;
-
     // And swap it with the current element.
     temporaryValue = array[currentIndex];
     array[currentIndex] = array[randomIndex];
     array[randomIndex] = temporaryValue;
   }
-
   return array;
 }
+
+/*-----------------------Script Starts-----------------------*/
+$(document).ready(function(){
+	$("button").hide();
+	$(".resetBtn").hide();
+	$(".choices").hide();
+	$(".startGameBtn").show();
+	$(".startGameBtn").on("click", gameStart);
+
+});
+
+/*Pseudo Code
+1. Add button to screen.
+2. User can CLICK on Start Button to begin trivia game
+3. Timer for question starts
+4. Question shows
+5. Answers show
+6. User can HOVER over answers to choose and CLICK
+7. Boolean value, true or false for right answer
+	-False-> Wrong! Replaces Question; The Correct Answer replaces Answers;
+	-True-> Correct! 
+8. Run out of time. Out of Time! replaces question; the correct answer
+9. Immediately move on to next question after a certain time. 
+10. Correct! replaces Question.
+11. Start Over! Button CLICK
+*/
