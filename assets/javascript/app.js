@@ -102,6 +102,7 @@ function gameStart(){
 		console.log("userChoice is: " + userChoice);
 		//HACK, won't read (questions[questionNum].answer) WHY?
 		console.log(questionNum);
+		//turn into function, clean it up
 		if(userChoice === answers.q0){
 			console.log(userChoice + answers.q0 + " Correct!");
 			rightAnswerResult(questionNum);
